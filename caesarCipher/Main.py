@@ -20,7 +20,7 @@ def encrypt_text(text, key):
             else:
                 result += chr((ord(char) + key - 97) % 26 + 97)
     else:
-        key = input("Please enter in correct format")
+        key = int(input("Please enter in correct format"))
         encrypt_text(text, key)
 
     return print(result)
