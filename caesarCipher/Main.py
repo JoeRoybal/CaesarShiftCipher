@@ -1,13 +1,29 @@
 def shift(chars):
+    pass
 
 
+def encrypt():
+    pass
 
-def encrypt(file, content):
-    with open(file, 'r') as f:
-        for line in f.readlines():
-            for chars in line:
-                shift(chars)
-        #shift cypher the test
+
+def encrypt_text(text, key):
+    result = ""
+    if 0 < key < 26:
+        # transverse the plain text
+        for i in range(len(text)):
+            char = text[i]
+            # Encrypt uppercase characters in plain text
+
+            if char.isupper():
+                result += chr((ord(char) + key - 65) % 26 + 65)
+            # Encrypt lowercase characters in plain text
+            else:
+                result += chr((ord(char) + key - 97) % 26 + 97)
+    else:
+        key = input("Please enter in correct format")
+        encrypt_text(text, key)
+
+    return print(result)
 
 
 def encrypt_file():
@@ -15,7 +31,7 @@ def encrypt_file():
     file = open(response, 'r')
     content = file.read()
 
-    new_path = '/home/joe/Documents/pyProjects/PycharmProjects/caesarCipher/EncryptedText.txt'
+    new_path = '/home/joe/Documents/Python/Projects/CaesarShiftCipher/caesarCipher/EncryptedText.txt'
     encrypted_file = open(new_path, 'w')
 
     new_content = encrypt(response, content)
@@ -25,17 +41,16 @@ def encrypt_file():
     encrypted_file.close()
 
 
-def encrypt_text():
-    pass
-
-
 def encrypt_query():
     response = input("Would you like to encrypt an existing file(1) or input text(2)")
     if response == '1':
         encrypt_file()
     elif response == '2':
-        encrypt_text()
+        text = input("Enter the phrase you would like encrpted")
+        key = int(input("Enter numerical value for shift cipher (1-25)"))
+        encrypt_text(text, key)
     else:
+        print("Please enter either a 1 or 2")
         encrypt_query()
 
 
@@ -54,6 +69,7 @@ def decrypt_query():
     elif response == '2':
         decrypt_text()
     else:
+        print("Please enter either a 1 or 2")
         decrypt_query()
 
 
@@ -64,6 +80,7 @@ def origin():
     elif response == 'Decrypt' or 'decrypt':
         decrypt_query()
     else:
+        print("Please enter valid response")
         origin()
         return response
 
