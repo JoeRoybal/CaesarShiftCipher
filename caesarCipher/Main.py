@@ -46,7 +46,7 @@ def encrypt_query():
     if response == '1':
         encrypt_file()
     elif response == '2':
-        text = input("Enter the phrase you would like encrpted")
+        text = input("Enter the phrase you would like encrypted")
         key = int(input("Enter numerical value for shift cipher (1-25)"))
         encrypt_text(text, key)
     else:
@@ -58,15 +58,34 @@ def decrypt_file():
     pass
 
 
-def decrypt_text():
-    pass
+def decrypt_text(text, key):
+    result = ""
+    if 0 < key < 26:
+        # transverse the plain text
+        for i in range(len(text)):
+            char = text[i]
+            # Encrypt uppercase characters in plain text
+
+            if char.isupper():
+                result += chr((ord(char) - key - 65) % 26 + 65)
+            # Encrypt lowercase characters in plain text
+            else:
+                result += chr((ord(char) - key - 97) % 26 + 97)
+    else:
+        key = int(input("Please enter in correct format"))
+        encrypt_text(text, key)
+
+    return print(result)
 
 
 def decrypt_query():
-    response = input("Would you like to encrypt an existing file(1) or input text(2)")
+    response = input("Would you like to decrypt an existing file(1) or input text(2)")
     if response == '1':
         decrypt_file()
     elif response == '2':
+        text = input("Enter the phrase you would like decrypted")
+        key = int(input("Enter numerical value for shift cipher (1-25)"))
+        encrypt_text(text, key)
         decrypt_text()
     else:
         print("Please enter either a 1 or 2")
@@ -75,7 +94,7 @@ def decrypt_query():
 
 def origin():
     response = input("Would you like to Encrypt or Decrypt?")
-    if response == 'Envrypt' or 'encrypt':
+    if response == 'Encrypt' or 'encrypt':
         encrypt_query()
     elif response == 'Decrypt' or 'decrypt':
         decrypt_query()
